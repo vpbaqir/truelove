@@ -1,12 +1,13 @@
 # Budget Beacon
 
-Open `index.html` in a modern browser. It runs locally and stores entries in this browser only.
+## Run locally
+Open `index.html` in a modern browser. No dependencies are required.
 
 ## Features
-Add, list, and remove entries; see the running balance.
+Record income or expenses with a date and category. Review monthly income, spending, and balance; filter transactions and delete entries. Amounts are shown in INR.
 
 ## Privacy
-No account or server upload.
+Entries stay in this browser's local storage. No account or server upload is used.
 
-## Limits
-Data may be cleared by the browser. This MVP has no backup/export feature.
+## Limitations
+Entries are manual. There is no bank connection, export/backup, encryption, or cross-device sync. Browser data may be cleared. This is a simple record keeper, not financial guidance.
