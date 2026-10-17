@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#111a2c">
+<title>Pattern Pulse — sequence memory game</title>
+<style>
+:root{color-scheme:dark;--bg:#111a2c;--panel:#19243a;--line:#2b3852;--text:#f2f5ff;--muted:#a5b0c8;--lime:#d9ff70;--violet:#a9a2ff;--pink:#ff8bb4;--blue:#75c8ff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#202e4a 0%,var(--bg) 55%);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.shell{max-width:980px;margin:auto;padding:25px 16px 55px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:40px}.brand{font-weight:850;letter-spacing:-.04em;display:flex;align-items:center;gap:10px}.logo{width:39px;height:39px;border-radius:13px;background:var(--lime);color:#17202e;display:grid;place-items:center;font-size:22px}.badge{border:1px solid var(--line);border-radius:99px;padding:6px 11px;color:var(--muted);font-size:12px}.hero{text-align:center;max-width:700px;margin:0 auto 28px}.eyebrow{color:var(--lime);text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:.17em}.hero h1{font-size:clamp(2.7rem,8vw,5.5rem);line-height:.94;letter-spacing:-.08em;margin:13px 0}.hero h1 span{color:var(--lime)}.hero p{color:var(--muted);margin:0 auto;max-width:480px}.game{max-width:650px;margin:auto;background:#151f33;border:1px solid var(--line);border-radius:28px;padding:23px;box-shadow:0 30px 80px #0003}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:17px}.stat{background:#1e2b44;border:1px solid var(--line);border-radius:15px;padding:12px;text-align:center}.stat span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.stat strong{display:block;font-size:26px;letter-spacing:-.04em}.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:420px;margin:0 auto}.tile{aspect-ratio:1;border:1px solid #34445f;border-radius:19px;background:#25334c;cursor:pointer;transition:transform .12s,background .12s,box-shadow .12s;display:grid;place-items:center;color:transparent;min-width:0}.tile:before{content:"";width:22%;height:22%;border-radius:50%;background:#3b4c69;transition:inherit}.tile:nth-child(3n+1).lit{background:var(--lime);border-color:var(--lime);box-shadow:0 0 30px #d9ff7066}.tile:nth-child(3n+2).lit{background:var(--violet);border-color:var(--violet);box-shadow:0 0 30px #a9a2ff66}.tile:nth-child(3n).lit{background:var(--pink);border-color:var(--pink);box-shadow:0 0 30px #ff8bb466}.tile.lit:before{background:#152033}.tile:focus-visible{outline:3px solid white;outline-offset:3px}.tile:disabled{cursor:default;opacity:.8}.tile:active:not(:disabled){transform:scale(.97)}.status{text-align:center;min-height:28px;color:var(--muted);margin:17px 0 8px}.actions{display:flex;justify-content:center;flex-wrap:wrap;gap:9px}.btn{border:1px solid var(--line);border-radius:13px;padding:11px 17px;background:#202d45;color:var(--text);font:inherit;font-weight:800;cursor:pointer}.btn.primary{background:var(--lime);border-color:var(--lime);color:#192233}.btn:focus-visible{outline:3px solid white;outline-offset:3px}.btn:disabled{opacity:.5;cursor:not-allowed}.tips{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:18px;color:var(--muted);font-size:12px}.foot{text-align:center;color:var(--muted);font-size:12px;margin-top:25px}@media(max-width:520px){.shell{padding:17px 12px 40px}.top{margin-bottom:28px}.game{padding:14px;border-radius:22px}.board{gap:7px}.tile{border-radius:14px}.stat{padding:9px 4px}.stat strong{font-size:22px}.hero{margin-bottom:22px}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="shell">
+<header class="top"><div class="brand"><span class="logo" aria-hidden="true">◉</span> Pattern Pulse</div><span class="badge">Memory · Focus · Play</span></header>
+<section class="hero"><div class="eyebrow">Can you keep the rhythm?</div><h1>Watch it.<br><span>Repeat it.</span></h1><p>Remember the growing sequence of lights and tap the tiles in the same order. Every round adds one more step.</p></section>
+<section class="game" aria-label="Pattern memory game">
+<div class="stats"><div class="stat"><span>Round</span><strong id="round">0</strong></div><div class="stat"><span>Best</span><strong id="best">0</strong></div><div class="stat"><span>Sequence</span><strong id="length">0</strong></div></div>
+<div class="board" id="board" aria-label="Nine game tiles">
+<button class="tile" data-index="0" aria-label="Tile 1" disabled></button><button class="tile" data-index="1" aria-label="Tile 2" disabled></button><button class="tile" data-index="2" aria-label="Tile 3" disabled></button>
+<button class="tile" data-index="3" aria-label="Tile 4" disabled></button><button class="tile" data-index="4" aria-label="Tile 5" disabled></button><button class="tile" data-index="5" aria-label="Tile 6" disabled></button>
+<button class="tile" data-index="6" aria-label="Tile 7" disabled></button><button class="tile" data-index="7" aria-label="Tile 8" disabled></button><button class="tile" data-index="8" aria-label="Tile 9" disabled></button>
+</div>
+<p id="status" class="status" role="status" aria-live="polite">Press Start to see your first pattern.</p>
+<div class="actions"><button class="btn primary" id="start">Start game</button><button class="btn" id="replay" disabled>Replay pattern</button></div>
+<div class="tips"><span>Tip: name the tiles in your head as you watch.</span><span>Works with keyboard or touch.</span></div>
+</section>
+<p class="foot">No account · Best score saved in this browser · No tracking</p>
+</main>
+<script>
+const $=id=>document.getElementById(id),tiles=[...document.querySelectorAll(".tile")],BEST="pattern-pulse-best";
+let sequence=[],step=0,round=0,best=0,mode="idle",timers=[];
+try{best=Number(localStorage.getItem(BEST))||0;}catch(e){}
+$("best").textContent=best;
+function clearTimers(){timers.forEach(clearTimeout);timers=[];tiles.forEach(t=>t.classList.remove("lit"));}
+function later(fn,ms){timers.push(setTimeout(fn,ms));}
+function setMode(next){mode=next;tiles.forEach(t=>t.disabled=next!=="input");$("replay").disabled=!(sequence.length&&next!=="playback");}
+function flash(i,duration=330){const tile=tiles[i];tile.classList.add("lit");later(()=>tile.classList.remove("lit"),duration);}
+function update(){ $("round").textContent=round;$("length").textContent=sequence.length;$("best").textContent=best; }
+function start(){clearTimers();sequence=[];step=0;round=0;nextRound();}
+function nextRound(){sequence.push(Math.floor(Math.random()*9));step=0;round=sequence.length;update();play();}
+function play(){clearTimers();setMode("playback");$("status").textContent="Watch the pattern…";$("replay").disabled=true;const startDelay=350;sequence.forEach((idx,n)=>{later(()=>flash(idx,360),startDelay+n*620);});later(()=>{setMode("input");$("status").textContent="Your turn — tap tile 1 of "+sequence.length+".";},startDelay+sequence.length*620);}
+tiles.forEach((tile,i)=>tile.addEventListener("click",()=>{if(mode!=="input")return;flash(i,170);if(sequence[step]!==i){setMode("over");$("status").textContent="Not quite. You reached round "+round+". Start again to build a new pattern.";if(round>best){best=round;try{localStorage.setItem(BEST,String(best));}catch(e){}update();} $("start").textContent="Play again";return;}step++;if(step===sequence.length){setMode("between");$("status").textContent="Perfect. Next round adds one light.";later(nextRound,650);}else{$("status").textContent="Correct — "+(step)+" of "+sequence.length+".";}}));
+$("start").addEventListener("click",()=>{if(mode==="input"||mode==="playback"||mode==="between"){clearTimers();}start();$("start").textContent="Restart game";});
+$("replay").addEventListener("click",()=>{if(sequence.length&&mode!=="playback"){step=0;play();}});
+update();
+</script>
+</body></html>
